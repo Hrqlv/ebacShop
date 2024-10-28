@@ -1,0 +1,27 @@
+{
+  "name": "ebacshop",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx playwright test --project=chrome"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Hrqlv/ebacShop.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Hrqlv/ebacShop/issues"
+  },
+  "homepage": "https://github.com/Hrqlv/ebacShop#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.48.2",
+    "@types/node": "^22.8.1"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5"
+  }
+}

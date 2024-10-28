@@ -28,4 +28,8 @@ export class EbacShopPage {
         await expect(this.page.locator('h1[class="page-title"]')).toBeVisible()
         await expect(this.page.locator('div[class="woocommerce-MyAccount-content"]')).toBeVisible()
     }
+
+    async validarMensagemErroCadastro() {
+        await expect(this.page.locator('ul[role="alert"]')).toBeVisible()
+    }
 }

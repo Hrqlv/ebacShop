@@ -79,10 +79,22 @@ export class EbacShopPage {
         await this.page.locator('input[id="billing_phone"]').fill(telefone)
         await this.page.locator('input[id="billing_email"]').fill(email)
         await this.page.locator('input[id="terms"]').click()
+    }
+
+    async btnFinalizarCompra() {
         await this.page.locator('input[id="place_order"]').click()
     }
 
     async validarInfoFinal() {
         await expect(this.page.locator('h1[class="page-title"]')).toBeVisible()
+    }
+
+    async validarMensagemErroCheckout() {
+        await expect(this.page.locator('ul[class="woocommerce-error"]').filter({ hasText: 'O campo "Nome" do endereço de faturamento' })).toBeVisible({  timeout: 3000 })
+        await expect(this.page.locator('ul[class="woocommerce-error"]').filter({ hasText: 'O campo "Sobrenome" do endereço de faturamento' })).toBeVisible({  timeout: 3000 })
+        await expect(this.page.locator('ul[class="woocommerce-error"]').filter({ hasText: 'O campo "Endereço" do endereço de faturamento' })).toBeVisible({  timeout: 3000 })
+        await expect(this.page.locator('ul[class="woocommerce-error"]').filter({ hasText: 'O campo "Cidade" do endereço de faturamento' })).toBeVisible({  timeout: 3000 })
+        await expect(this.page.locator('ul[class="woocommerce-error"]').filter({ hasText: 'O campo "CEP" do endereço de faturamento' })).toBeVisible({  timeout: 3000 })
+        await expect(this.page.locator('ul[class="woocommerce-error"]').filter({ hasText: 'O campo "Telefone" do endereço de faturamento' })).toBeVisible({  timeout: 3000 })
     }
 }

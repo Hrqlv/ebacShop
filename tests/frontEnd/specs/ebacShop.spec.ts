@@ -26,17 +26,20 @@ test.describe('Realizar uma compra com sucesso de fluxo positivo e também reali
     await ebacShop.btnIconePerfil()
   })
 
-  test.describe('Realizar o fluxo positivo de sucesso', async () => {
+  test.describe('[Objetivo do teste] Realizar o fluxo positivo de sucesso', async () => {
     test.beforeEach(async ({ page }) => {
       await ebacShop.realizarCadastro(email, senha)
       await ebacShop.btnRegistrar()
     })
+
+    // CENÁRIO 1
     test('[Cenario 1] Validar as informaçoes após realizar o cadastro', async ({ page }) => {
       await test.step('[Casos de teste 1] Validar as informaçoes de perfil', async () => {
         await ebacShop.validarInforPerfil()
       })
     })
-  
+    
+    // CENÁRIO 2
     test('[Cenario 2] Selecionar o produto ir no carrinho e finalizar a compra', async ({ page }) => {
       await test.step('[Casos de teste 1] ir pra home', async () => {
        await ebacShop.irPraHome()
@@ -67,6 +70,7 @@ test.describe('Realizar uma compra com sucesso de fluxo positivo e também reali
           endereco1, endereco2,
           cidade, cep, telefone, email
         )
+        await ebacShop.btnFinalizarCompra()
       })
 
       await test.step('[Casos de teste 7] Validar mensagem final que é a de pedido finalizado', async () => {
@@ -75,7 +79,9 @@ test.describe('Realizar uma compra com sucesso de fluxo positivo e também reali
     });
   })
 
-  test.describe('Realizar fluxo negativo / erros', async () => {
+  test.describe('[Objetivo do teste] Realizar fluxo negativo / erros', async () => {
+
+    // CENÁRIO 3
     test('[Cenario 3] Realizar a validação de erros na tela de cadastro', async ({ page }) => {
       await test.step('[Casos de teste 1] Validar email e senha com credenciais vazias para email e senha', async () => {
         await ebacShop.realizarCadastro('', '')
@@ -85,6 +91,30 @@ test.describe('Realizar uma compra com sucesso de fluxo positivo e também reali
         await ebacShop.realizarCadastro('qaTest12345678@gmail.com', '')
         await ebacShop.btnRegistrar()
         await ebacShop.validarMensagemErroCadastro()
+      })
+    })
+
+    // CENÁRIO 4
+    test('[Cenario 4] Realizar a validação de erros na tela de checkout', async ({ page }) => {
+      await test.step('[Casos de teste 1] Validar mensagens de erros / campos obrigatórios', async () => {
+
+        // Realizar o cadastro e a compra antes
+        await ebacShop.realizarCadastro(email, senha)
+        await ebacShop.btnRegistrar()
+        await ebacShop.validarInforPerfil()
+        await ebacShop.irPraHome()
+        await ebacShop.selecionarAlgumProduto()
+        await ebacShop.validarInfoProdutoSelecionado()
+        await ebacShop.escolherTamanhoDoProduto()
+        await ebacShop.escolherCorDoProduto()
+        await ebacShop.btnComprar()
+        await ebacShop.verCarrinho()
+        await ebacShop.validarInfoVerCarrinho()
+        await ebacShop.btnConcluirCompra()
+        await ebacShop.btnFinalizarCompra()
+
+        // Validar mensagens de erro da checkout
+       await ebacShop.validarMensagemErroCheckout()
       })
     })
   })

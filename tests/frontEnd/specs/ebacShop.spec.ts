@@ -1,19 +1,11 @@
 import { test, expect } from '@playwright/test';
 import { EbacShopPage } from '../pages/ebacShop.page';
-const faker = require('faker-br');
-
-const email = faker.internet.email(); 
-const senha = faker.internet.password(16, true, /[A-Za-z0-9]/)    
-const primeiroNome = faker.name.firstName()
-const segundoNome = faker.name.lastName()
-const companyName = faker.company.companyName()
-const endereco1 = faker.address.streetAddress()
-const endereco2 = faker.address.secondaryAddress()
-const cidade = faker.address.city()
-const cep = faker.address.zipCode('#####-###') 
-const telefone = faker.phone.phoneNumber('## #####-####')
+import { criarUsuario } from '../../../helpers/helpers';
+import { dadosCheckout } from '../../../helpers/helpers';
 
 let ebacShop: any
+let usuarioCadastro = criarUsuario();
+let usuarioCheckout = dadosCheckout()
 
 test.describe('Realizar uma compra com sucesso de fluxo positivo e também realizar as validaçoes de erro fluxo negativo / alternativo', async () => {
   test.beforeEach(async ({ page }) => {
@@ -28,7 +20,7 @@ test.describe('Realizar uma compra com sucesso de fluxo positivo e também reali
 
   test.describe('[Objetivo do teste] Realizar o fluxo positivo de sucesso', async () => {
     test.beforeEach(async ({ page }) => {
-      await ebacShop.realizarCadastro(email, senha)
+      await ebacShop.realizarCadastro(usuarioCadastro.email, usuarioCadastro.senha)
       await ebacShop.btnRegistrar()
     })
 
@@ -66,9 +58,9 @@ test.describe('Realizar uma compra com sucesso de fluxo positivo e também reali
       })
 
       await test.step('[Casos de teste 6] Colocar as informaçoes da checkout', async () => {
-        await ebacShop.infoCheckout(primeiroNome, segundoNome, companyName,
-          endereco1, endereco2,
-          cidade, cep, telefone, email
+        await ebacShop.infoCheckout(usuarioCheckout.primeiroNome, usuarioCheckout.segundoNome, usuarioCheckout.companyName,
+          usuarioCheckout.endereco1, usuarioCheckout.endereco2,
+          usuarioCheckout.cidade, usuarioCheckout.cep, usuarioCheckout.telefone, usuarioCheckout.email
         )
         await ebacShop.btnFinalizarCompra()
       })
@@ -99,7 +91,7 @@ test.describe('Realizar uma compra com sucesso de fluxo positivo e também reali
       await test.step('[Casos de teste 1] Validar mensagens de erros / campos obrigatórios', async () => {
 
         // Realizar o cadastro e a compra antes
-        await ebacShop.realizarCadastro(email, senha)
+        await ebacShop.realizarCadastro(usuarioCadastro.email, usuarioCadastro.senha)
         await ebacShop.btnRegistrar()
         await ebacShop.validarInforPerfil()
         await ebacShop.irPraHome()

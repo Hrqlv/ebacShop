@@ -2,9 +2,13 @@ import { expect, type Page } from '@playwright/test';
 
 export class EbacShopPage {
     readonly page: Page;
+    elementErrorCheckout: string;
+    elementErrorCadastro: string
 
     constructor(page: Page) {
         this.page = page;
+        this.elementErrorCheckout = 'ul[class="woocommerce-error"]',
+        this.elementErrorCadastro = 'ul[role="alert"]'
     }
 
     async irPraHome() {
@@ -30,7 +34,7 @@ export class EbacShopPage {
     }
 
     async validarMensagemErroCadastro() {
-        await expect(this.page.locator('ul[role="alert"]')).toBeVisible()
+        await expect(this.page.locator(this.elementErrorCadastro)).toBeVisible()
     }
 
     async selecionarAlgumProduto() {
@@ -90,11 +94,11 @@ export class EbacShopPage {
     }
 
     async validarMensagemErroCheckout() {
-        await expect(this.page.locator('ul[class="woocommerce-error"]').filter({ hasText: 'O campo "Nome" do endereço de faturamento' })).toBeVisible({  timeout: 3000 })
-        await expect(this.page.locator('ul[class="woocommerce-error"]').filter({ hasText: 'O campo "Sobrenome" do endereço de faturamento' })).toBeVisible({  timeout: 3000 })
-        await expect(this.page.locator('ul[class="woocommerce-error"]').filter({ hasText: 'O campo "Endereço" do endereço de faturamento' })).toBeVisible({  timeout: 3000 })
-        await expect(this.page.locator('ul[class="woocommerce-error"]').filter({ hasText: 'O campo "Cidade" do endereço de faturamento' })).toBeVisible({  timeout: 3000 })
-        await expect(this.page.locator('ul[class="woocommerce-error"]').filter({ hasText: 'O campo "CEP" do endereço de faturamento' })).toBeVisible({  timeout: 3000 })
-        await expect(this.page.locator('ul[class="woocommerce-error"]').filter({ hasText: 'O campo "Telefone" do endereço de faturamento' })).toBeVisible({  timeout: 3000 })
+        await expect(this.page.locator(this.elementErrorCheckout).filter({ hasText: 'O campo "Nome" do endereço de faturamento' })).toBeVisible({  timeout: 3000 })
+        await expect(this.page.locator(this.elementErrorCheckout).filter({ hasText: 'O campo "Sobrenome" do endereço de faturamento' })).toBeVisible({  timeout: 3000 })
+        await expect(this.page.locator(this.elementErrorCheckout).filter({ hasText: 'O campo "Endereço" do endereço de faturamento' })).toBeVisible({  timeout: 3000 })
+        await expect(this.page.locator(this.elementErrorCheckout).filter({ hasText: 'O campo "Cidade" do endereço de faturamento' })).toBeVisible({  timeout: 3000 })
+        await expect(this.page.locator(this.elementErrorCheckout).filter({ hasText: 'O campo "CEP" do endereço de faturamento' })).toBeVisible({  timeout: 3000 })
+        await expect(this.page.locator(this.elementErrorCheckout).filter({ hasText: 'O campo "Telefone" do endereço de faturamento' })).toBeVisible({  timeout: 3000 })
     }
 }

@@ -11,12 +11,18 @@ permissions:
 
 jobs:
   test:
+    timeout-minutes: 5
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
           node-version: 18
+
+      - name: Set environment variables
+        run: |
+          echo "PLAYWRIGHT_TEST_BASE_URL=http://lojaebac.ebaconline.art.br/minha-conta/" >> $GITHUB_ENV
 
       - name: Install dependencies
         run: npm ci
@@ -26,7 +32,8 @@ jobs:
 
       - name: Run Playwright tests
         run: npm run tests
-        continue-on-error: true
+        env:
+          PLAYWRIGHT_TEST_BASE_URL: ${{ env.PLAYWRIGHT_TEST_BASE_URL }}
 
       - name: Upload test report
         uses: actions/upload-artifact@v3

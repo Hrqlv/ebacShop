@@ -7,7 +7,7 @@ let ebacShop: any
 let usuarioCadastro = criarUsuario();
 let usuarioCheckout = dadosCheckout()
 
-test.describe('Realizar uma compra com sucesso de fluxo positivo e também realizar as validaçoes de erro fluxo negativo / alternativo', async () => {
+test.describe('Realizar uma compra com sucesso de fluxo positivo e também realizar as validaçoes de erro fluxo negativo / alternativo @CI', async () => {
   test.beforeEach(async ({ page }) => {
     ebacShop = new EbacShopPage(page);
 

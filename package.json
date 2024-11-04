@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "tests": "npx playwright test --project=chrome"
+    "tests": "npx playwright test --project=chrome",
+    "ci": "npx playwright test --project=chrome --grep \"@CI\""
   },
   "repository": {
     "type": "git",
